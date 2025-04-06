@@ -7,7 +7,7 @@ load_dotenv()
 
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash") 
 
-loader = YoutubeLoader.from_youtube_url("https://www.youtube.com/watch?v=2rphLdQWexU&ab_channel=BBCNews", add_video_info=False)
+loader = YoutubeLoader.from_youtube_url("https://www.youtube.com/watch?v=cd67_M-a5xE", add_video_info=False, language=["en", "de", "fr", "it", "es"])
 transcript = loader.load()[0].page_content
 scope = "very detailed"
 
