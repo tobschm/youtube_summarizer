@@ -1,0 +1,4 @@
+* UI
+* Datenbank
+* Wählbare LLMs
+* Audio Ausgabe
