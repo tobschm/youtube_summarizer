@@ -1,0 +1,7 @@
+python-dotenv
+langchain-google-genai
+google-genai
+langchain-core
+PyQt6
+langchain_community
+youtube-transcript-api
