@@ -1,5 +1,0 @@
-* Text streaming
-* Datenbank for settings
-* Settings UI
-* Multiple LLMs
-* Audio Ausgabe

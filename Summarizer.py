@@ -13,7 +13,7 @@ def summarize(url, scope, language):
     You summarize the content of Youtube videos. For that you are given the following transcript {transcript}. 
     The summary should be {scope}.
     The summary should be in the language {language}.
-    Don't include any other information. Don't mention that you are referencing a video in the summary.
+    Don't include any other information. Don't mention that you are referencing a video in the summary. Use fitting headlines and paragraphs.
     """
     
     prompt = PromptTemplate(template=promptTemplate, input_variables=["transcript", "scope", "language"])
