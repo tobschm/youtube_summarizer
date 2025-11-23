@@ -8,10 +8,9 @@ A simple UI was built using PyQt6.
 Youtube_transcript_api is used to get the transcript of the Youtube video. Afterwards LangChain is used to generate a summary of the transcript with Google Gemini
 
 ## Planned features
-* Text streaming
 * Multiple LLMs: Switch between Gemini-, ChatGPT- and Deepseek-models
-* SQLite Database for API-keys
-* Settings UI (to set API-keys)
+* SQLite Database for API-keys => done
+* Settings UI (to set API-keys) => done
 * Audio output
 
 ## License
