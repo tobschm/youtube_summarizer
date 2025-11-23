@@ -22,8 +22,8 @@ def extract_video_id(url):
         raise ValueError("Could not extract video ID from URL")
     return match.group(1)
 
-def summarize(url, scope, language):
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key="YOUR_API_KEY")
+def summarize(url, scope, language, api_key):
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=api_key)
 
     video_id = extract_video_id(url)
     api = YouTubeTranscriptApi()
@@ -42,4 +42,3 @@ def summarize(url, scope, language):
     # Create the chain and stream the output
     chain = prompt | llm
     return chain.invoke({"transcript": text, "scope": scope, "language": language}).content
-
