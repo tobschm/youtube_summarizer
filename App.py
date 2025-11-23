@@ -1,7 +1,25 @@
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtCore
 from Summarizer import summarize
 from MainWindow import Ui_MainWindow
 from database import Database
+
+class SummarizerWorker(QtCore.QThread):
+    finished = QtCore.pyqtSignal(str)
+    error = QtCore.pyqtSignal(str)
+
+    def __init__(self, url, scope, language, api_key):
+        super().__init__()
+        self.url = url
+        self.scope = scope
+        self.language = language
+        self.api_key = api_key
+
+    def run(self):
+        try:
+            result = summarize(self.url, self.scope, self.language, self.api_key)
+            self.finished.emit(result)
+        except Exception as e:
+            self.error.emit(str(e))
 
 class Youtube_summarizer(QtWidgets.QMainWindow):
     def __init__(self):
@@ -36,11 +54,28 @@ class Youtube_summarizer(QtWidgets.QMainWindow):
             self.ui.textBrowser.setText("Error: Please enter a Google API Key.")
             return
 
-        try:
-            result = summarize(url, scope, language, api_key)
-            self.ui.textBrowser.setText(result)
-        except Exception as e:
-            self.ui.textBrowser.setText(f"Error: {str(e)}")
+        self.show_loading()
+        
+        self.worker = SummarizerWorker(url, scope, language, api_key)
+        self.worker.finished.connect(self.handle_result)
+        self.worker.error.connect(self.handle_error)
+        self.worker.finished.connect(self.hide_loading)
+        self.worker.error.connect(self.hide_loading)
+        self.worker.start()
+
+    def show_loading(self):
+        self.ui.pushButton.setEnabled(False)
+        self.ui.textBrowser.setText("Loading summary... Please wait.")
+        # Optional: You could add a more visual loading indicator here if needed
+
+    def hide_loading(self):
+        self.ui.pushButton.setEnabled(True)
+
+    def handle_result(self, result):
+        self.ui.textBrowser.setText(result)
+
+    def handle_error(self, error_msg):
+        self.ui.textBrowser.setText(f"Error: {error_msg}")
 
 
 if __name__ == "__main__":
