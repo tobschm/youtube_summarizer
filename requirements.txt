@@ -5,3 +5,4 @@ langchain-core
 PyQt6
 langchain_community
 youtube-transcript-api
+markdown

@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtCore
 from Summarizer import summarize
 from MainWindow import Ui_MainWindow
 from database import Database
+import markdown
 
 class SummarizerWorker(QtCore.QThread):
     finished = QtCore.pyqtSignal(str)
@@ -72,7 +73,8 @@ class Youtube_summarizer(QtWidgets.QMainWindow):
         self.ui.pushButton.setEnabled(True)
 
     def handle_result(self, result):
-        self.ui.textBrowser.setText(result)
+        html_result = markdown.markdown(result)
+        self.ui.textBrowser.setHtml(html_result)
 
     def handle_error(self, error_msg):
         self.ui.textBrowser.setText(f"Error: {error_msg}")
