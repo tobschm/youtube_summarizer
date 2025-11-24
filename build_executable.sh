@@ -1,4 +1,4 @@
 echo "Building executable..."
-pyinstaller --noconfirm --onefile --windowed --name "MakeItShort_macos" --clean App.py
+pyinstaller --noconfirm --onefile --windowed --name "MakeItShort_win" --clean App.py
 
-echo "Build complete. Mac OS executable is in dist/MakeItShort_macos.app"
+echo "Build complete. Executable is in /dist"

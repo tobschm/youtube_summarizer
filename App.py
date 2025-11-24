@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets, QtCore
 from Summarizer import summarize
 from MainWindow import Ui_MainWindow
-from Database import Database
+from database import Database
 import markdown
 
 class SummarizerWorker(QtCore.QThread):
