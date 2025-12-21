@@ -23,7 +23,7 @@ def extract_video_id(url):
     return match.group(1)
 
 def summarize(url, scope, language, api_key):
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=api_key)
+    llm = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", google_api_key=api_key)
 
     video_id = extract_video_id(url)
     api = YouTubeTranscriptApi()
@@ -41,4 +41,16 @@ def summarize(url, scope, language, api_key):
     
     # Create the chain and stream the output
     chain = prompt | llm
-    return chain.invoke({"transcript": text, "scope": scope, "language": language}).content
+    response = chain.invoke({"transcript": text, "scope": scope, "language": language})
+    content = response.content
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, str):
+                parts.append(item)
+            elif isinstance(item, dict):
+                parts.append(item.get("text", item.get("content", str(item))))
+            else:
+                parts.append(str(item))
+        return " ".join(parts)
+    return content
